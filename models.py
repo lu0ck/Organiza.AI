@@ -16,7 +16,8 @@ class TotalDiario(base):
     data = Column(Date)          # Data do dia
     km_total_dia = Column(Float) # Quilometragem total do dia
     ganho_total_dia = Column(Float) # Ganhos totais do dia
-    gasto_total_dia = Column(Float) # Gastos totais do dia
+    gasto_total_abastecimento = Column(Float) # Gastos totais do dia com combustviel
+    gasto_total_alimentacao = Column(Float) # Gastos totais do dia com combustviel
 
 # Modelo para a tabela "Corridas Individuais"
 class Corrida(base):

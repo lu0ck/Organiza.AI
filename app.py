@@ -30,16 +30,18 @@ def main(page: ft.Page):
 
             # Coleta os dados da interface
             data = date_picker.value  # Mantém como datetime.date
-            km_total_dia = float(km_total_input.value or 0)
-            ganho_total_dia = float(ganho_total_input.value or 0)
-            gasto_total_dia = float(gasto_total_input.value or 0)
+            km_total_dia = float(km_total_input.value.replace(',', '.') or 0)
+            ganho_total_dia = float(ganho_total_input.value.replace(',', '.') or 0)
+            gasto_total_abastecimento = float(gasto_total_abastecimento_input.value.replace(',', '.') or 0)
+            gasto_total_alimentacao = float(gasto_total_alimentacao_input.value.replace(',', '.') or 0)
 
             # Cria uma nova instância de TotalDiario
             novo_registro = TotalDiario(
                 data=data,
                 km_total_dia=km_total_dia,
                 ganho_total_dia=ganho_total_dia,
-                gasto_total_dia=gasto_total_dia
+                gasto_total_abastecimento=gasto_total_abastecimento,
+                gasto_total_alimentacao=gasto_total_alimentacao 
             )
 
             # Salva no banco de dados
@@ -50,7 +52,7 @@ def main(page: ft.Page):
             txt_erro.visible = False
             txt_acerto.content.value = "Dados salvos com sucesso!"
             txt_acerto.visible = True
-            print(f"Salvou: Data={data.strftime('%d-%m-%Y')}, KM={km_total_dia}, Ganho={ganho_total_dia}, Gasto={gasto_total_dia}")
+            print(f"Salvou: Data={data.strftime('%d-%m-%Y')}, KM={km_total_dia}, Ganho={ganho_total_dia}, Gasto={gasto_total_abastecimento},Gasto={gasto_total_alimentacao}")
 
         except Exception as ex:
             # Mensagem de erro
@@ -91,8 +93,9 @@ def main(page: ft.Page):
 
     selected_date = ft.Text("Nenhuma data selecionada")
     km_total_input = ft.TextField(label="Km total do dia", keyboard_type=ft.KeyboardType.NUMBER, width=200)
-    ganho_total_input = ft.TextField(label="Ganho total do dia", keyboard_type=ft.KeyboardType.NUMBER, width=200)
-    gasto_total_input = ft.TextField(label="Gasto total do dia", keyboard_type=ft.KeyboardType.NUMBER, width=200)
+    ganho_total_input = ft.TextField(label="R$ Ganho total do dia", keyboard_type=ft.KeyboardType.NUMBER, width=200)
+    gasto_total_abastecimento_input = ft.TextField(label="R$ Abastecimento total do dia", keyboard_type=ft.KeyboardType.NUMBER, width=200)
+    gasto_total_alimentacao_input = ft.TextField(label="R$ Gasto total alimentaçao dia", keyboard_type=ft.KeyboardType.NUMBER, width=200)
     save_button = ft.ElevatedButton("Salvar", on_click=salvar_geral)
 
     # Layout da aba "Total Diário"
@@ -106,7 +109,8 @@ def main(page: ft.Page):
                 selected_date,
                 km_total_input,
                 ganho_total_input,
-                gasto_total_input,
+                gasto_total_abastecimento_input,
+                gasto_total_alimentacao_input,
                 save_button
             ],
             alignment=ft.MainAxisAlignment.START,
