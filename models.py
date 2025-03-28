@@ -1,7 +1,6 @@
-from sqlalchemy import create_engine, Column, Integer, Float, Date
+from sqlalchemy import create_engine, Column, Integer, Float, Date, String
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
-from sqlalchemy import Column, Integer, Float, Date, String
 
 # Configuração do banco de dados SQLite
 CONN = "sqlite:///bancodedados.db"
@@ -14,10 +13,13 @@ class TotalDiario(base):
     __tablename__ = "total_diario"
     id = Column(Integer, primary_key=True)
     data = Column(Date)          # Data do dia
+    horario_saida = Column(String)  # Horário de saída (formato HH:MM)
+    horario_chegada = Column(String) # Horário de chegada (formato HH:MM)
     km_total_dia = Column(Float) # Quilometragem total do dia
     ganho_total_dia = Column(Float) # Ganhos totais do dia
-    gasto_total_abastecimento = Column(Float) # Gastos totais do dia com combustviel
-    gasto_total_alimentacao = Column(Float) # Gastos totais do dia com combustviel
+    gasto_total_abastecimento = Column(Float) # Gastos totais do dia com combustível
+    gasto_total_alimentacao = Column(Float) # Gastos totais do dia com alimentação
+    qtde_corridas = Column(Integer) # Quantidade de corridas realizadas no dia
 
 # Modelo para a tabela "Corridas Individuais"
 class Corrida(base):
