@@ -20,6 +20,7 @@ class TotalDiario(base):
     gasto_total_abastecimento = Column(Float) # Gastos totais do dia com combustível
     gasto_total_alimentacao = Column(Float) # Gastos totais do dia com alimentação
     qtde_corridas = Column(Integer) # Quantidade de corridas realizadas no dia
+    classificacao_dia = Column(String)  # Classificação do dia (Péssimo, Ruim, Mediano, Bom, Ótimo)
 
 # Modelo para a tabela "Corridas Individuais"
 class Corrida(base):

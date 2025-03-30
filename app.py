@@ -52,6 +52,7 @@ def main(page: ft.Page):
             gasto_total_abastecimento = float(gasto_total_abastecimento_input.value.replace(',', '.') or 0)
             gasto_total_alimentacao = float(gasto_total_alimentacao_input.value.replace(',', '.') or 0)
             qtde_corridas = int(qtde_corridas_input.value or 0)
+            classificacao_dia = classificacao_dia_input.value  # Obtém a classificação selecionada
 
             # Cria uma nova instância de TotalDiario
             novo_registro = TotalDiario(
@@ -62,7 +63,8 @@ def main(page: ft.Page):
                 ganho_total_dia=ganho_total_dia,
                 gasto_total_abastecimento=gasto_total_abastecimento,
                 gasto_total_alimentacao=gasto_total_alimentacao,
-                qtde_corridas=qtde_corridas
+                qtde_corridas=qtde_corridas,
+                classificacao_dia=classificacao_dia  # Adiciona a classificação
             )
 
             # Salva no banco de dados
@@ -73,7 +75,7 @@ def main(page: ft.Page):
             txt_erro.visible = False
             txt_acerto.content.value = "Dados salvos com sucesso!"
             txt_acerto.visible = True
-            print(f"Salvou: Data={data.strftime('%d-%m-%Y')}, Saída={horario_saida}, Chegada={horario_chegada}, KM={km_total_dia}, Ganho={ganho_total_dia}, Gasto Abastecimento={gasto_total_abastecimento}, Gasto Alimentação={gasto_total_alimentacao}, Corridas={qtde_corridas}")
+            print(f"Salvou: Data={data.strftime('%d-%m-%Y')}, Saída={horario_saida}, Chegada={horario_chegada}, KM={km_total_dia}, Ganho={ganho_total_dia}, Gasto Abastecimento={gasto_total_abastecimento}, Gasto Alimentação={gasto_total_alimentacao}, Corridas={qtde_corridas}, Classificação={classificacao_dia}")
 
         except Exception as ex:
             # Mensagem de erro
@@ -130,9 +132,23 @@ def main(page: ft.Page):
         on_click=lambda _: page.open(horario_chegada_picker)
     )
 
+    # Configuração do Dropdown para classificar o dia
+    classificacao_dia_input = ft.Dropdown(
+        label="Classificação do dia",
+        width=200,
+        options=[
+            ft.dropdown.Option("Péssimo"),
+            ft.dropdown.Option("Ruim"),
+            ft.dropdown.Option("Mediano"),
+            ft.dropdown.Option("Bom"),
+            ft.dropdown.Option("Ótimo")
+        ],
+        value="Mediano"  # Valor padrão
+    )
+
     selected_date = ft.Text("Nenhuma data selecionada")
-    horario_saida = ft.Text("Horário de saída não selecionado")  # Definido aqui
-    horario_chegada = ft.Text("Horário de chegada não selecionado")  # Definido aqui
+    horario_saida = ft.Text("Horário de saída não selecionado")
+    horario_chegada = ft.Text("Horário de chegada não selecionado")
     km_total_input = ft.TextField(label="Km total do dia", keyboard_type=ft.KeyboardType.NUMBER, width=200)
     ganho_total_input = ft.TextField(label="R$ Ganho total do dia", keyboard_type=ft.KeyboardType.NUMBER, width=200)
     gasto_total_abastecimento_input = ft.TextField(label="R$ Abastecimento total do dia", keyboard_type=ft.KeyboardType.NUMBER, width=200)
@@ -150,14 +166,15 @@ def main(page: ft.Page):
                 date_button,
                 selected_date,
                 horario_saida_button,
-                horario_saida,  # Adicionado à interface
+                horario_saida,
                 horario_chegada_button,
-                horario_chegada,  # Adicionado à interface
+                horario_chegada,
                 km_total_input,
                 ganho_total_input,
                 gasto_total_abastecimento_input,
                 gasto_total_alimentacao_input,
                 qtde_corridas_input,
+                classificacao_dia_input,  # Adiciona o Dropdown no final
                 save_button
             ],
             alignment=ft.MainAxisAlignment.START,
