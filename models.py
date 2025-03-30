@@ -28,9 +28,10 @@ class Corrida(base):
     id = Column(Integer, primary_key=True)
     data = Column(Date)          # Data da corrida
     plataforma = Column(String)  # Plataforma (Uber, 99pop, Indrive)
-    valor = Column(Float)        # Valor da corrida
-    km = Column(Float)          # Quilometragem da corrida
-    tempo = Column(Float)       # Tempo da corrida em minutos
-
+    tempo = Column(Float)        # Tempo da corrida em minutos
+    valor = Column(Float)        # Valor recebido em reais
+    km = Column(Float)           # Quilometragem da corrida
+    local_saida = Column(String) # Local de saída
+    local_destino = Column(String) # Local de destino
 # Cria as tabelas no banco de dados
 base.metadata.create_all(engine)
