@@ -10,7 +10,7 @@ base = declarative_base()
 
 # Modelo para a tabela "Total Diário"
 class TotalDiario(base):
-    __tablename__ = "total_diario"
+    __tablename__ = "total_diario"  # Corrigido de tablename para __tablename__
     id = Column(Integer, primary_key=True)
     data = Column(Date)          # Data do dia
     horario_saida = Column(String)  # Horário de saída (formato HH:MM)
@@ -24,7 +24,7 @@ class TotalDiario(base):
 
 # Modelo para a tabela "Corridas Individuais"
 class Corrida(base):
-    __tablename__ = "corridas"
+    __tablename__ = "corridas"  # Corrigido de tablename para __tablename__
     id = Column(Integer, primary_key=True)
     data = Column(Date)          # Data da corrida
     plataforma = Column(String)  # Plataforma (Uber, 99pop, Indrive)
@@ -33,5 +33,6 @@ class Corrida(base):
     km = Column(Float)           # Quilometragem da corrida
     local_saida = Column(String) # Local de saída
     local_destino = Column(String) # Local de destino
+
 # Cria as tabelas no banco de dados
 base.metadata.create_all(engine)
